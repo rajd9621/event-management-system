@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Manage Events')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Manage Events</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead><tr><th>Title</th><th>Type</th><th>Date</th><th>Organizer</th><th>Seats</th><th>Actions</th></tr></thead>
+                        <tbody>
+                            <tr th:each="e : ${events}">
+                                <td th:text="${e.title}">Title</td>
+                                <td><span class="badge bg-primary" th:text="${e.eventType}">TYPE</span></td>
+                                <td th:text="${#temporals.format(e.eventDate, 'dd MMM yyyy')}">Date</td>
+                                <td th:text="${e.organizer != null ? e.organizer.name : 'N/A'}">Org</td>
+                                <td th:text="${e.availableSeats + '/' + e.totalSeats}">Seats</td>
+                                <td>
+                                    <a th:href="@{/events/{id}(id=${e.id})}" class="btn btn-sm btn-outline-info">View</a>
+                                    <a th:href="@{/admin/events/{id}/delete(id=${e.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete event?')"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a th:href="@{/admin/dashboard}" class="btn btn-link mt-3">Back to Admin Panel</a>
+    </div>
+</section>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

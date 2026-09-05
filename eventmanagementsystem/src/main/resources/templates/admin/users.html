@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Manage Users')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Manage Users</h1>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Phone</th><th>Role</th><th>Joined</th><th>Action</th></tr></thead>
+                        <tbody>
+                            <tr th:each="u : ${users}">
+                                <td th:text="${u.id}">ID</td>
+                                <td th:text="${u.name}">Name</td>
+                                <td th:text="${u.email}">Email</td>
+                                <td th:text="${u.phone}">Phone</td>
+                                <td><span class="badge bg-secondary" th:text="${u.role}">ROLE</span></td>
+                                <td th:text="${u.createdAt != null ? #temporals.format(u.createdAt, 'dd MMM yyyy') : '-'}">Date</td>
+                                <td><a th:href="@{/admin/users/{id}/delete(id=${u.id})}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Delete user?')"><i class="bi bi-trash"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <a th:href="@{/admin/dashboard}" class="btn btn-link mt-3">Back to Admin Panel</a>
+    </div>
+</section>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

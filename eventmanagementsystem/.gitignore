@@ -1,0 +1,35 @@
+# Compiled class files
+target/
+*.class
+
+# IDE files
+.idea/
+*.iml
+*.iws
+.classpath
+.project
+.settings/
+.factorypath
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Maven
+target/
+dependency-reduced-pom.xml
+
+# Application properties with secrets (uncomment if needed)
+# application-prod.properties
+
+# H2 database files (if using file-based H2)
+*.h2.db
+*.mv.db
+*.trace.db

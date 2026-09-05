@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Admin Panel')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <h1><i class="bi bi-speedometer2"></i> Admin Panel</h1>
+        <p class="text-muted">System overview and management.</p>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h6>Total Users</h6>
+                        <h2 th:text="${userCount}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h6>Total Events</h6>
+                        <h2 th:text="${eventCount}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h6>Manage</h6>
+                        <a th:href="@{/admin/users}" class="btn btn-light btn-sm mt-1">Users</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h6>Manage</h6>
+                        <a th:href="@{/admin/events}" class="btn btn-light btn-sm mt-1">Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5>Recent Users</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="u : ${users}">
+                                <td th:text="${u.id}">ID</td>
+                                <td th:text="${u.name}">Name</td>
+                                <td th:text="${u.email}">Email</td>
+                                <td><span class="badge bg-secondary" th:text="${u.role}">ROLE</span></td>
+                                <td><a th:href="@{/admin/users/{id}/delete(id=${u.id})}" class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete this user?')"><i class="bi bi-trash"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5>All Events</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr><th>Title</th><th>Type</th><th>Date</th><th>Organizer</th><th>Seats Left</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="e : ${events}">
+                                <td th:text="${e.title}">Title</td>
+                                <td><span class="badge bg-primary" th:text="${e.eventType}">TYPE</span></td>
+                                <td th:text="${#temporals.format(e.eventDate, 'dd MMM yyyy')}">Date</td>
+                                <td th:text="${e.organizer != null ? e.organizer.name : 'N/A'}">Org</td>
+                                <td th:text="${e.availableSeats + '/' + e.totalSeats}">Seats</td>
+                                <td>
+                                    <a th:href="@{/events/{id}(id=${e.id})}" class="btn btn-sm btn-outline-info">View</a>
+                                    <a th:href="@{/admin/events/{id}/delete(id=${e.id})}" class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Delete this event?')"><i class="bi bi-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

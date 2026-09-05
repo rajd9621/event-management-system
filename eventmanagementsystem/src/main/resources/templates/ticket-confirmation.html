@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Ticket Confirmed')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg border-success">
+                    <div class="card-header bg-success text-white text-center py-3">
+                        <h4 class="mb-0"><i class="bi bi-check-circle-fill"></i> Ticket Confirmed!</h4>
+                    </div>
+                    <div class="card-body p-4 text-center">
+                        <p class="text-muted">Your ticket has been booked successfully. Present the QR code at the venue for entry.</p>
+
+                        <div class="ticket-info bg-light p-3 rounded mb-3 text-start">
+                            <p class="mb-1"><strong>Ticket Code:</strong> <span th:text="${ticket.ticketCode}">CODE</span></p>
+                            <p class="mb-1"><strong>Event:</strong> <span th:text="${event.title}">Title</span></p>
+                            <p class="mb-1"><strong>Date:</strong> <span th:text="${#temporals.format(event.eventDate, 'dd MMM yyyy, HH:mm')}">Date</span></p>
+                            <p class="mb-1"><strong>Venue:</strong> <span th:text="${event.venue}">Venue</span></p>
+                            <p class="mb-1"><strong>Seat:</strong> <span th:text="${ticket.seatNumber}">Seat</span></p>
+                            <p class="mb-1"><strong>Name:</strong> <span th:text="${user.name}">User</span></p>
+                            <p class="mb-0"><strong>Amount Paid:</strong> ₹<span th:text="${#numbers.formatDecimal(event.ticketPrice, 0, 0)}">Price</span></p>
+                        </div>
+
+                        <div class="qr-code-container mb-3">
+                            <img th:if="${qrCode != null}" th:src="${qrCode}" alt="QR Code" class="img-fluid rounded border p-2" style="max-width: 250px;"/>
+                        </div>
+
+                        <p class="text-muted small"><i class="bi bi-qr-code"></i> Scan this QR code at the venue entrance</p>
+
+                        <div class="d-grid gap-2">
+                            <a th:href="@{/book/my-tickets}" class="btn btn-outline-primary">View My Tickets</a>
+                            <a th:href="@{/events}" class="btn btn-link">Browse More Events</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

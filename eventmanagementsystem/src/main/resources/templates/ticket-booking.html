@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Book Ticket')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h3><i class="bi bi-ticket-perforated-fill"></i> Book Your Ticket</h3>
+                        <hr>
+                        <h5 th:text="${event.title}">Event Title</h5>
+                        <p class="text-muted">
+                            <i class="bi bi-calendar"></i>
+                            <span th:text="${#temporals.format(event.eventDate, 'dd MMM yyyy, HH:mm')}">Date</span><br/>
+                            <i class="bi bi-geo-alt"></i> <span th:text="${event.venue}">Venue</span><br/>
+                            <i class="bi bi-people"></i>
+                            <span th:text="${event.availableSeats + ' seats available'}">Seats</span>
+                        </p>
+                        <div class="alert alert-info">
+                            <strong>Ticket Price: ₹<span th:text="${#numbers.formatDecimal(event.ticketPrice, 0, 0)}">Price</span></strong>
+                        </div>
+                        <div th:if="${event.availableSeats <= 0}" class="alert alert-danger">
+                            Sorry, this event is sold out.
+                        </div>
+                        <form th:action="@{/book/{id}(id=${event.id})}" method="post" th:unless="${event.availableSeats <= 0}">
+                            <div class="mb-3">
+                                <label class="form-label">Payment Method</label>
+                                <select class="form-select" name="paymentMethod">
+                                    <option value="UPI">UPI (PhonePe / GPay / Paytm)</option>
+                                    <option value="CARD">Credit / Debit Card</option>
+                                    <option value="NETBANKING">Net Banking</option>
+                                    <option value="WALLET">Wallet</option>
+                                </select>
+                            </div>
+                            <div class="alert alert-warning small">
+                                <i class="bi bi-info-circle"></i> This is a demo payment. No real transaction will occur.
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100 btn-lg">
+                                <i class="bi bi-lock-fill"></i> Pay ₹<span th:text="${#numbers.formatDecimal(event.ticketPrice, 0, 0)}">Price</span> & Confirm
+                            </button>
+                        </form>
+                        <a th:href="@{/events/{id}(id=${event.id})}" class="btn btn-link mt-3">Back to Event</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Create Event')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <h3><i class="bi bi-calendar-plus"></i> <span th:text="${event.id != null ? 'Edit Event' : 'Create Event'}">Create Event</span></h3>
+                        <hr>
+                        <form th:action="${event.id != null ? '/organizer/events/' + event.id : '/organizer/events'}"
+                              th:object="${event}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Event Title</label>
+                                <input type="text" class="form-control" th:field="*{title}" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" th:field="*{description}" rows="3" required></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Event Type</label>
+                                    <select class="form-select" th:field="*{eventType}" required>
+                                        <option value="MUSIC">Music</option>
+                                        <option value="COLLEGE">College</option>
+                                        <option value="SPORTS">Sports</option>
+                                        <option value="CONFERENCE">Conference</option>
+                                        <option value="WORKSHOP">Workshop</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Venue</label>
+                                    <input type="text" class="form-control" th:field="*{venue}" required/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Event Date & Time</label>
+                                    <input type="datetime-local" class="form-control" th:field="*{eventDate}" required/>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Image URL (optional)</label>
+                                    <input type="text" class="form-control" th:field="*{imageUrl}" placeholder="https://..."/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Ticket Price (₹)</label>
+                                    <input type="number" class="form-control" th:field="*{ticketPrice}" min="0" step="0.01" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Total Seats</label>
+                                    <input type="number" class="form-control" th:field="*{totalSeats}" min="1" required/>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">Available Seats</label>
+                                    <input type="number" class="form-control" th:field="*{availableSeats}" min="0"/>
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle"></i> Save Event</button>
+                                <a th:href="@{/organizer/dashboard}" class="btn btn-outline-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

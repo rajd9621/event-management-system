@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('My Dashboard')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <h1><i class="bi bi-person-fill"></i> My Dashboard</h1>
+        <p class="text-muted">Welcome, <strong th:text="${user.name}">User</strong>!</p>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h6>My Registrations</h6>
+                        <h2 th:text="${registrations.size()}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h6>My Tickets</h6>
+                        <h2 th:text="${tickets.size()}">0</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h6>Browse Events</h6>
+                        <a th:href="@{/events}" class="btn btn-light btn-sm mt-1">Find Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h5><i class="bi bi-calendar-check"></i> My Registrations</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr><th>Event</th><th>Date</th><th>Status</th><th>Actions</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="reg : ${registrations}">
+                                <td th:text="${reg.event.title}">Event</td>
+                                <td th:text="${#temporals.format(reg.event.eventDate, 'dd MMM yyyy')}">Date</td>
+                                <td>
+                                    <span class="badge bg-success" th:if="${reg.status.name() == 'REGISTERED'}">Registered</span>
+                                    <span class="badge bg-primary" th:if="${reg.status.name() == 'ATTENDED'}">Attended</span>
+                                    <span class="badge bg-danger" th:if="${reg.status.name() == 'CANCELLED'}">Cancelled</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/events/{id}(id=${reg.event.id})}" class="btn btn-sm btn-outline-info">View</a>
+                                    <a th:href="@{/participant/registrations/{id}/cancel(id=${reg.id})}" class="btn btn-sm btn-outline-danger"
+                                       onclick="return confirm('Cancel registration?')"
+                                       th:if="${reg.status.name() == 'REGISTERED'}">Cancel</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${registrations.isEmpty()}" class="text-center py-3 text-muted">
+                    <p>No registrations yet. <a th:href="@{/events}">Browse events</a> to get started!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5><i class="bi bi-ticket-perforated"></i> My Tickets</h5>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr><th>Code</th><th>Event</th><th>Date</th><th>Seat</th><th>Checked In</th><th>View</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="t : ${tickets}">
+                                <td><code th:text="${t.ticketCode}">CODE</code></td>
+                                <td th:text="${t.event.title}">Event</td>
+                                <td th:text="${#temporals.format(t.event.eventDate, 'dd MMM yyyy')}">Date</td>
+                                <td th:text="${t.seatNumber}">Seat</td>
+                                <td>
+                                    <span class="badge bg-success" th:if="${t.checkedIn}">Yes</span>
+                                    <span class="badge bg-warning" th:unless="${t.checkedIn}">No</span>
+                                </td>
+                                <td><a th:href="@{/events/{id}(id=${t.event.id})}" class="btn btn-sm btn-outline-info">View</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div th:if="${tickets.isEmpty()}" class="text-center py-3 text-muted">
+                    <p>No tickets booked yet. <a th:href="@{/events}">Book your first ticket</a>!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Error')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+<section class="py-5">
+    <div class="container text-center">
+        <h1 class="display-1 text-danger">500</h1>
+        <p class="lead">Something went wrong on our end. Please try again later.</p>
+        <a th:href="@{/home}" class="btn btn-primary">Go Home</a>
+    </div>
+</section>
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

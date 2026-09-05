@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Contact')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">Contact Us</h1>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <h5>Get in Touch</h5>
+                <p><i class="bi bi-geo-alt-fill text-primary"></i> 123 Event Street, Bengaluru, Karnataka 560001</p>
+                <p><i class="bi bi-telephone-fill text-primary"></i> +91 98765 43210</p>
+                <p><i class="bi bi-envelope-fill text-primary"></i> support@eventhub.com</p>
+                <hr>
+                <h5>Follow Us</h5>
+                <div class="d-flex gap-3 fs-4">
+                    <a href="#" class="text-dark"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-dark"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5>Send a Message</h5>
+                        <form method="post" th:action="@{/contact}">
+                            <div class="mb-3">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" required/>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" name="message" rows="4" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

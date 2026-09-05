@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('My Tickets')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4"><i class="bi bi-ticket-perforated-fill"></i> My Tickets</h1>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4" th:each="t : ${tickets}">
+                <div class="card ticket-card shadow-sm h-100">
+                    <div class="card-header bg-primary text-white">
+                        <code class="text-white" th:text="${t.ticketCode}">CODE</code>
+                    </div>
+                    <div class="card-body">
+                        <h5 th:text="${t.event.title}">Event</h5>
+                        <p class="text-muted small mb-1"><i class="bi bi-calendar"></i>
+                            <span th:text="${#temporals.format(t.event.eventDate, 'dd MMM yyyy, HH:mm')}">Date</span>
+                        </p>
+                        <p class="text-muted small mb-1"><i class="bi bi-geo-alt"></i> <span th:text="${t.event.venue}">Venue</span></p>
+                        <p class="text-muted small mb-0"><i class="bi bi-person-bounding-box"></i> Seat: <span th:text="${t.seatNumber}">Seat</span></p>
+                        <div class="mt-2">
+                            <span class="badge bg-success" th:if="${t.checkedIn}"><i class="bi bi-check-circle"></i> Checked In</span>
+                            <span class="badge bg-warning" th:unless="${t.checkedIn}"><i class="bi bi-clock"></i> Pending Check-in</span>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent">
+                        <a th:href="@{/events/{id}(id=${t.event.id})}" class="btn btn-sm btn-outline-primary w-100">View Event</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${tickets.isEmpty()}" class="text-center py-5 text-muted">
+            <i class="bi bi-ticket-perforated display-1"></i>
+            <h4 class="mt-3">No tickets yet</h4>
+            <p><a th:href="@{/events}">Browse events</a> and book your first ticket!</p>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>

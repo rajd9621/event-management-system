@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('About Us')}"></head>
+<body>
+<nav th:replace="~{layout :: navbar}"></nav>
+
+<section class="py-5">
+    <div class="container">
+        <h1 class="mb-4">About EventHub</h1>
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="lead">Smart Event Management System — a unified platform for organizers to create, manage, and promote events, and for participants to discover, register, and attend.</p>
+                <p>We support music concerts, college fests, sports tournaments, professional conferences, and interactive workshops. Our mission is to make event management seamless and accessible to everyone.</p>
+                <h4 class="mt-4">Our Vision</h4>
+                <p>To empower communities by bridging the gap between event organizers and participants through technology, supporting the UN Sustainable Development Goals for quality education, economic growth, innovation, sustainable cities, and responsible consumption.</p>
+                <h4 class="mt-4">What We Offer</h4>
+                <ul>
+                    <li>Easy event creation and management for organizers</li>
+                    <li>Secure ticket booking with QR code-based digital tickets</li>
+                    <li>Real-time seat availability and instant registration</li>
+                    <li>Feedback and rating system for continuous improvement</li>
+                    <li>Role-based dashboards for Admin, Organizer, and Participant</li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5>Tech Stack</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="bi bi-check-circle text-success"></i> Java 17 + Spring Boot</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Spring Security</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Hibernate / JPA</li>
+                            <li><i class="bi bi-check-circle text-success"></i> MySQL Database</li>
+                            <li><i class="bi bi-check-circle text-success"></i> Bootstrap 5 + Thymeleaf</li>
+                            <li><i class="bi bi-check-circle text-success"></i> JavaScript + AJAX</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="~{layout :: footer}"></footer>
+</body>
+</html>
